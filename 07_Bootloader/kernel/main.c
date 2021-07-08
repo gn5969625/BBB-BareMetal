@@ -48,11 +48,11 @@ int main (void)
    printf("Bootloader ready, code destination = 0x%X\n",(unsigned int)mem);
    printf("Asking for boot file....... \005 \n");
    
-   
+   /*
    int l = read(0,&length,sizeof(length));
    int m = read(0,mem,length);
    int s = read(0,&sum,sizeof(sum));
-   
+   */
    for(uint32_t i = 0; i < length; i++)
    {
       sumcheck += mem[i];
