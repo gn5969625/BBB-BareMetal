@@ -1,10 +1,12 @@
-CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
-CHAIN=$(CHAINPATH)arm-none-eabi-
+#CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
+#CHAIN=$(CHAINPATH)arm-none-eabi-
+CHAIN=arm-none-eabi-
 CFLAGS=-std=gnu99 -Wall -mfpu=neon -mhard-float -mcpu=cortex-a8 -O0 -fstack-usage
 AFLAGS=-mfpu=neon
 OBJ=obj/
 BIN=bin/
-LIBPATH=/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/arm-none-eabi/lib/fpu/
+LIBPATH=/home/kevin/workspace/rtos/gcc-arm-none-eabi-4_8-2013q4-20131204-linux/gcc-arm-none-eabi-4_8-2013q4/arm-none-eabi/lib/fpu/
+
 
 COPYARG=CHAIN="$(CHAIN)" CFLAGS="$(CFLAGS)" AFLAGS="$(AFLAGS)"
 
@@ -13,6 +15,7 @@ all: dir $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 	@echo "assembling output file..."
 	$(CHAIN)ld -T memmap.ld $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o -L $(LIBPATH) -l"c" -l"m" -o $(OBJ)main.elf
 	$(CHAIN)objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary
+	../bin/mk-gpimage 0x402f0400 $(BIN)spl.boot $(BIN)MLO
 	@echo "done!"
 
 dir:
@@ -41,17 +44,12 @@ $(OBJ)kernel.o: force_look
 force_look:
 	@true
 
-copy:
-	@echo "copying boot file..."
-	@cp $(BIN)spl.boot ../boot
-	@echo "done"
-
 clean:
 	@echo "cleaning up..."
 	@rm -rf $(OBJ)*.o
 	@rm -rf $(OBJ)*.elf
 	@rm -rf $(BIN)*.boot
-	@rm -rf ../boot/*.boot
+	@rm -rf $(BIN)MLO
 	@rm -rf core/obj/*
 	@rm -rf proc/obj/*
 	@rm -rf board/obj/*
