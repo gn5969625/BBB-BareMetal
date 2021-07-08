@@ -1,5 +1,6 @@
-CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
-CHAIN=$(CHAINPATH)arm-none-eabi-
+#CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
+#CHAIN=$(CHAINPATH)arm-none-eabi-
+CHAIN=arm-none-eabi-
 CFLAGS=-std=gnu99 -Wall -mfpu=neon -mhard-float -mcpu=cortex-a8 -O0
 AFLAGS=-mfpu=neon
 OBJ=obj/

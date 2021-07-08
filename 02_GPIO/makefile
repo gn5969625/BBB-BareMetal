@@ -1,5 +1,6 @@
-CHAINPATH=/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
-CHAIN=$(CHAINPATH)arm-none-eabi
+#CHAINPATH=/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
+#CHAIN=$(CHAINPATH)arm-none-eabi
+CHAIN=arm-none-eabi
 CFLAGS=-std=c99 -Wall
 OBJ=obj/
 BIN=bin/
@@ -7,7 +8,7 @@ BIN=bin/
 all: start.o main.o GPIO.o pad.o control_module.o clock_module.o
 	$(CHAIN)-ld $(OBJ)start.o $(OBJ)main.o $(OBJ)GPIO.o $(OBJ)pad.o $(OBJ)control_module.o $(OBJ)clock_module.o -T memmap.ld -o $(OBJ)main.elf
 	$(CHAIN)-objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary
-	cp $(BIN)spl.boot ../boot
+	../bin/mk-gpimage 0x402f0400 $(BIN)spl.boot $(BIN)MLO
 
 start.o: start.s
 	$(CHAIN)-as start.s -o $(OBJ)start.o
@@ -34,8 +35,7 @@ clean:
 	rm -rf $(OBJ)*.o
 	rm -rf $(OBJ)*.elf
 	rm -rf $(BIN)*.boot
-	rm -rf ../boot/*.boot
-
+	rm -rf $(BIN)MLO
 
 dump:
 	$(CHAIN)-objdump -D $(OBJ)main.elf

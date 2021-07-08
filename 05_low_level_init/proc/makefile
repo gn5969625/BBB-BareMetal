@@ -1,11 +1,12 @@
-CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
-CHAIN=$(CHAINPATH)arm-none-eabi-
+#CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_8-2014q3/bin/
+#CHAIN=$(CHAINPATH)arm-none-eabi-
+CHAIN=arm-none-eabi-
 CFLAGS=-std=gnu99 -Wall -mfpu=neon -mhard-float -mcpu=cortex-a8 -O0 -ggdb
 AFLAGS=-mfpu=neon
 OBJ=obj/
 PARENTOBJ=../obj/
 
-all: dir  $(OBJ)proc_init.o $(OBJ)UART.o $(OBJ)GPIO.o $(OBJ)control_module.o $(OBJ)clock_module.o $(OBJ)pad.o $(OBJ)proc_Handlers.o
+all: dir  $(OBJ)proc_init.o $(OBJ)UART.o $(OBJ)GPIO.o $(OBJ)control_module.o $(OBJ)clock_module.o $(OBJ)pad.o $(OBJ)proc_handlers.o
 	$(CHAIN)ld -r $(OBJ)*.o -o $(PARENTOBJ)proc.o
 
 dir:
@@ -14,8 +15,8 @@ dir:
 $(OBJ)proc_init.o: proc_init.c
 	$(CHAIN)gcc $(CFLAGS) -c proc_init.c -o $(OBJ)proc_init.o
 
-$(OBJ)proc_Handlers.o: proc_Handlers.c
-	$(CHAIN)gcc $(CFLAGS) -c proc_Handlers.c -o $(OBJ)proc_Handlers.o
+$(OBJ)proc_handlers.o: proc_handlers.c
+	$(CHAIN)gcc $(CFLAGS) -c proc_handlers.c -o $(OBJ)proc_handlers.o
 
 $(OBJ)GPIO.o: GPIO.c
 	$(CHAIN)gcc $(CFLAGS) -c GPIO.c -o $(OBJ)GPIO.o

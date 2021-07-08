@@ -1,6 +1,6 @@
 MEMORY
 {
-    ram : ORIGIN = 0x0, LENGTH = 0x1B400
+    ram : ORIGIN = 0x402f0400, LENGTH = 0x1B400
 }
 
 SECTIONS
