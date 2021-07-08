@@ -3,9 +3,9 @@
 
 
 #CHAINPATH specifies the path to your toolchain/bin/ directory
-CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_9-2014q4/bin/
+#CHAINPATH=@/usr/local/gcc_arm/gcc-arm-none-eabi-4_9-2014q4/bin/
 #CHAIN specifies the name of your toolchain (arm-elf-linux, arm-none-eabi, etc...)
-CHAIN=$(CHAINPATH)arm-none-eabi-
+CHAIN=arm-none-eabi-
 
 #Warning flags:
 WFLAGS= -Wall
@@ -26,8 +26,7 @@ AFLAGS=-mfpu=neon
 OBJ=obj/
 BIN=bin/
 
-
-LIBPATH=/usr/local/gcc_arm/gcc-arm-none-eabi-4_9-2014q4/arm-none-eabi/lib/
+LIBPATH=/home/kevin/workspace/rtos/gcc-arm-none-eabi-4_8-2013q4-20131204-linux/gcc-arm-none-eabi-4_8-2013q4/arm-none-eabi/lib/fpu/
 LIBS=
 MMAP= memmap.ld
 OBJLIST= $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
@@ -38,6 +37,7 @@ all: dir excleanup $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)ker
 	@echo "assembling output file..."
 	$(CHAIN)g++ -L $(LIBPATH) -T $(MMAP) $(OBJLIST)  $(LIBS) -o $(OBJ)main.elf
 	$(CHAIN)objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary
+	../bin/mk-gpimage 0x402f0400 $(BIN)spl.boot $(BIN)MLO
 	@echo "done!"
 	$(CHAIN)size $(OBJ)main.elf
 
@@ -46,6 +46,7 @@ dir:
 
 excleanup:
 	@rm  -rf $(BIN)*.boot
+	@rm -rf $(BIN)MLO
 
 $(OBJ)core.o: force_look
 	@echo "building core/"
@@ -76,6 +77,7 @@ clean:
 	@rm -rf $(OBJ)*.o
 	@rm -rf $(OBJ)*.elf
 	@rm -rf $(BIN)*.boot
+	@rm -rf $(BIN)MLO
 	@rm -rf core/obj/*
 	@rm -rf proc/obj/*
 	@rm -rf board/obj/*
