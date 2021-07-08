@@ -6,10 +6,13 @@ AFLAGS=-mfpu=neon
 OBJ=obj/
 BIN=bin/
 
-all: start.o1 main.o GPIO.o pad.o control_module.o clock_module.o LED.o UART.o
+all: dir start.o1 main.o GPIO.o pad.o control_module.o clock_module.o LED.o UART.o
 	$(CHAIN)-ld -T memmap.ld $(OBJ)start.o1 $(OBJ)*.o -o $(OBJ)main.elf
 	$(CHAIN)-objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary
 	../bin/mk-gpimage 0x402f0400 $(BIN)spl.boot $(BIN)MLO
+
+dir:
+	mkdir -p $(OBJ) $(BIN)
 
 start.o1: start.s
 	$(CHAIN)-as $(AFLAGS) start.s -o $(OBJ)start.o1

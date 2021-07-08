@@ -5,10 +5,13 @@ CFLAGS=-std=c99 -Wall
 OBJ=obj/
 BIN=bin/
 
-all: start.o main.o GPIO.o pad.o control_module.o clock_module.o
+all: dir start.o main.o GPIO.o pad.o control_module.o clock_module.o
 	$(CHAIN)-ld $(OBJ)start.o $(OBJ)main.o $(OBJ)GPIO.o $(OBJ)pad.o $(OBJ)control_module.o $(OBJ)clock_module.o -T memmap.ld -o $(OBJ)main.elf
 	$(CHAIN)-objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary
 	../bin/mk-gpimage 0x402f0400 $(BIN)spl.boot $(BIN)MLO
+
+dir:
+	mkdir -p $(OBJ) $(BIN)
 
 start.o: start.s
 	$(CHAIN)-as start.s -o $(OBJ)start.o
