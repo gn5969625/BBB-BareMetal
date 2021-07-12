@@ -5,6 +5,8 @@ CFLAGS=-std=c99 -Wall
 OBJ=obj/
 BIN=bin/
 
+.PHONY: clean
+
 all: dir start.objstart main.o GPIO.o pad.o control_module.o clock_module.o LED.o
 	$(CHAIN)-ld $(OBJ)start.objstart $(OBJ)*.o -T memmap.ld -o $(OBJ)main.elf
 	$(CHAIN)-objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary

@@ -6,6 +6,8 @@ AFLAGS=-mfpu=neon
 OBJ=obj/
 BIN=bin/
 
+.PHONY: clean
+
 all: dir start.o1 main.o GPIO.o pad.o control_module.o clock_module.o LED.o UART.o
 	$(CHAIN)-ld -T memmap.ld $(OBJ)start.o1 $(OBJ)*.o -o $(OBJ)main.elf
 	$(CHAIN)-objcopy $(OBJ)main.elf $(BIN)spl.boot -O binary

@@ -7,6 +7,7 @@ OBJ=obj/
 BIN=bin/
 LIBPATH=/home/kevin/workspace/rtos/gcc-arm-none-eabi-4_8-2013q4-20131204-linux/gcc-arm-none-eabi-4_8-2013q4/arm-none-eabi/lib/fpu/
 
+.PHONY: clean
 
 all: dir $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 	@echo "assembling output file..."

@@ -32,6 +32,8 @@ OBJLIST= $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 
 COPYARG=CHAIN="$(CHAIN)" CFLAGS="$(CFLAGS)" AFLAGS="$(AFLAGS)" CPPFLAGS="$(CPPFLAGS)"
 
+.PHONY: clean
+
 all: dir $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 	@rm -rf $(BIN)*.boot
 	@echo "assembling output file..."

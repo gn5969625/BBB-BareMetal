@@ -6,7 +6,7 @@ AFLAGS=-mfpu=neon
 OBJ=obj/
 BIN=bin/
 
-
+.PHONY: clean
 
 all: dir $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 	@echo "assembling output file..."

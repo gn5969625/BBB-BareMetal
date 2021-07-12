@@ -10,6 +10,8 @@ LIBPATH=/home/kevin/workspace/rtos/gcc-arm-none-eabi-4_8-2013q4-20131204-linux/g
 
 COPYARG=CHAIN="$(CHAIN)" CFLAGS="$(CFLAGS)" AFLAGS="$(AFLAGS)"
 
+.PHONY: clean
+
 all: dir $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 	@rm -rf $(BIN)*.boot
 	@echo "assembling output file..."

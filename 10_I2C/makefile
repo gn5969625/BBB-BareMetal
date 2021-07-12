@@ -33,6 +33,8 @@ OBJLIST= $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 
 COPYARG=CHAIN="$(CHAIN)" CFLAGS="$(CFLAGS)" AFLAGS="$(AFLAGS)" CPPFLAGS="$(CPPFLAGS)"
 
+.PHONY: clean
+
 all: dir excleanup $(OBJ)core.o $(OBJ)proc.o $(OBJ)board.o $(OBJ)sys.o $(OBJ)kernel.o
 	@echo "assembling output file..."
 	$(CHAIN)g++ -L $(LIBPATH) -T $(MMAP) $(OBJLIST)  $(LIBS) -o $(OBJ)main.elf

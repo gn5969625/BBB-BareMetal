@@ -1,5 +1,6 @@
 CHAIN=arm-none-eabi
 
+.PHONY: clean
 
 all: start.s main.c
 	$(CHAIN)-as start.s -o start.o
